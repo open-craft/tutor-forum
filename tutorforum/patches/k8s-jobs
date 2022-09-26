@@ -23,3 +23,7 @@ spec:
             value: "{{ MONGODB_PORT }}"
           - name: MONGODB_DATABASE
             value: "{{ FORUM_MONGODB_DATABASE }}"
+          - name: MONGOID_USE_SSL
+            value: "{{FORUM_MONGODB_USE_SSL}}"
+          - name: MONGOID_AUTH_SOURCE
+            value: "{{FORUM_MONGODB_AUTH_SOURCE}}"

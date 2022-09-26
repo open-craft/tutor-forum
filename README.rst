@@ -28,6 +28,8 @@ Configuration
 - ``FORUM_MONGODB_DATABASE`` (default: ``"cs_comments_service"``)
 - ``FORUM_PORT`` (default: ``"4567""``)
 - ``FORUM_API_KEY`` (default: ``"forumapikey"``)
+- ``FORUM_MONGODB_AUTH_SOURCE`` (default: ``""``)
+- ``FORUM_MONGODB_USE_SSL`` (default: ``"false"``)
 
 Debugging
 ---------

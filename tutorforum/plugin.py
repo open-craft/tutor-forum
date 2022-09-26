@@ -14,6 +14,8 @@ config = {
         "MONGODB_DATABASE": "cs_comments_service",
         "PORT": "4567",
         "API_KEY": "forumapikey",
+        "MONGODB_USE_SSL": "false",
+        "MONGODB_AUTH_SOURCE": "",
     },
 }
 

@@ -41,8 +41,10 @@ ENV API_KEY forumapikey
 ENV SEARCH_SERVER "http://elasticsearch:9200"
 ENV MONGODB_AUTH ""
 ENV MONGOID_AUTH_MECH ""
+ENV MONGODB_AUTH_SOURCE ""
 ENV MONGODB_HOST "mongodb"
 ENV MONGODB_PORT "27017"
 ENV MONGODB_DATABASE "cs_comments_service"
+ENV MONGODB_USE_SSL "false"
 EXPOSE 4567
 CMD ./bin/unicorn -c config/unicorn_tcp.rb -I '.'

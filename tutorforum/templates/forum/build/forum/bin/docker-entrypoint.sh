@@ -1,6 +1,11 @@
 #!/bin/sh -e
 
-export MONGOHQ_URL="mongodb://$MONGODB_AUTH$MONGODB_HOST:$MONGODB_PORT/$MONGODB_DATABASE"
+if [ "${MONGODB_HOST#mongodb+srv://}" != "${HOST}" ]; then
+    export MONGOHQ_URL="$MONGODB_HOST/$MONGODB_DATABASE"
+else
+    export MONGOHQ_URL="mongo://$MONGODB_AUTH$MONGODB_HOST:$MONGODB_PORT/$MONGODB_DATABASE"
+fi
+
 # the search server variable was renamed after the upgrade to elasticsearch 7
 export SEARCH_SERVER_ES7="$SEARCH_SERVER"
 
@@ -11,6 +16,10 @@ then
 fi
 
 echo "Waiting for mongodb/elasticsearch..."
-dockerize -wait tcp://$MONGODB_HOST:$MONGODB_PORT -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
-
+if [ "${MONGODB_HOST#mongodb+srv://}" != "${HOST}" ]; then
+    echo "MongoDB is using SRV records, so we cannot wait for it to be ready"
+    dockerize -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
+else
+    dockerize -wait tcp://$MONGODB_HOST:$MONGODB_PORT -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
+fi
 exec "$@"
