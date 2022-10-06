@@ -2,6 +2,8 @@
 
 if [ "${MONGODB_HOST#mongodb+srv://}" != "${HOST}" ]; then
     export MONGOHQ_URL="$MONGODB_HOST/$MONGODB_DATABASE"
+elif [ "${MONGODB_HOST#mongodb://}" != "${HOST}" ]; then
+    export MONGOHQ_URL="$MONGODB_HOST/$MONGODB_DATABASE"
 else
     export MONGOHQ_URL="mongo://$MONGODB_AUTH$MONGODB_HOST:$MONGODB_PORT/$MONGODB_DATABASE"
 fi
@@ -18,6 +20,9 @@ fi
 echo "Waiting for mongodb/elasticsearch..."
 if [ "${MONGODB_HOST#mongodb+srv://}" != "${HOST}" ]; then
     echo "MongoDB is using SRV records, so we cannot wait for it to be ready"
+    dockerize -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
+elif [ "${MONGODB_HOST#mongodb://}" != "${HOST}" ]; then
+    echo "MongoDB URL cannot be split, so we cannot wait for it to be ready"
     dockerize -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
 else
     dockerize -wait tcp://$MONGODB_HOST:$MONGODB_PORT -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
