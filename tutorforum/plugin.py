@@ -16,6 +16,7 @@ config = {
         "API_KEY": "forumapikey",
         "MONGODB_USE_SSL": "false",
         "MONGODB_AUTH_SOURCE": "",
+        "MONGODB_AUTH_MECH": "",
     },
 }
 
