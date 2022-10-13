@@ -27,4 +27,5 @@ elif [ "${MONGODB_HOST#mongodb://}" != "${HOST}" ]; then
 else
     dockerize -wait tcp://$MONGODB_HOST:$MONGODB_PORT -wait $SEARCH_SERVER -wait-retry-interval 5s -timeout 600s
 fi
+echo $MONGOHQ_URL
 exec "$@"
