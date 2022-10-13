@@ -39,7 +39,7 @@ spec:
             - name: MONGOID_AUTH_SOURCE
               value: "{{FORUM_MONGODB_AUTH_SOURCE}}"
            {%- endif %}
-          {%- if FORUM_MONGODB_AUTH_MECH %}
-          - name: MONGOID_AUTH_MECH
-            value: "{{FORUM_MONGODB_AUTH_MECH}}"
-          {%- endif %}
+           {%- if FORUM_MONGODB_AUTH_MECH %}
+            - name: MONGOID_AUTH_MECH
+              value: "{{FORUM_MONGODB_AUTH_MECH}}"
+           {%- endif %}
