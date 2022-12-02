@@ -17,14 +17,27 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
+      {%- if GROVE_ENABLE_SHARED_ELASTICSEARCH %}
+      volumes:
+        - name: elasticsearch-ca
+          configMap:
+            name: elasticsearch-ca
+      {%- endif %}
       containers:
         - name: forum
+          {%- if GROVE_ENABLE_SHARED_ELASTICSEARCH %}
+          volumeMounts:
+            - name: elasticsearch-ca
+              mountPath: /etc/ssl/certs/elasticsearch-ca.pem
+              subPath: elasticsearch-ca.pem
+              readOnly: false
+          {%- endif %}
           image: {{ FORUM_DOCKER_IMAGE }}
           ports:
             - containerPort: {{ FORUM_PORT }}
           env:
             - name: SEARCH_SERVER
-              value: "{{ ELASTICSEARCH_SCHEME }}://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}"
+              value: "{{ ELASTICSEARCH_SCHEME }}://{{ELASTICSEARCH_HTTP_AUTH}}@{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}"
             - name: MONGODB_AUTH
               value: "{% if MONGODB_USERNAME and MONGODB_PASSWORD %}{{ MONGODB_USERNAME}}:{{ MONGODB_PASSWORD }}@{% endif %}"
             - name: MONGODB_HOST
@@ -39,4 +52,9 @@ spec:
               value: "{{MONGODB_AUTH_SOURCE}}"
             - name: MONGOID_AUTH_MECH
               value: "{{ MONGODB_AUTH_MECHANISM|auth_mech_as_ruby }}"
-
+            - name: ELASTICSEARCH_INDEX_PREFIX
+              value: "{{ ELASTICSEARCH_INDEX_PREFIX|default("") }}"
+            {%- if GROVE_ENABLE_SHARED_ELASTICSEARCH %}
+            - name: ELASTICSEARCH_CA_PATH
+              value: /etc/ssl/certs/elasticsearch-ca.pem
+            {%- endif %}
