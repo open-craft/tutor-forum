@@ -37,7 +37,11 @@ spec:
             - containerPort: {{ FORUM_PORT }}
           env:
             - name: SEARCH_SERVER
+            {%- if ELASTICSEARCH_HTTP_AUTH|default('') %}
               value: "{{ ELASTICSEARCH_SCHEME }}://{{ELASTICSEARCH_HTTP_AUTH}}@{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}"
+            {%- else %}
+              value: "{{ ELASTICSEARCH_SCHEME }}://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }}"
+            {%-endif %}
             - name: MONGODB_AUTH
               value: "{% if MONGODB_USERNAME and MONGODB_PASSWORD %}{{ MONGODB_USERNAME}}:{{ MONGODB_PASSWORD }}@{% endif %}"
             - name: MONGODB_HOST
