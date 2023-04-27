@@ -1,4 +1,4 @@
-FROM docker.io/ruby:2.5.7-slim-stretch
+FROM docker.io/ruby:2.5.7-slim-buster
 MAINTAINER Overhang.IO <contact@overhang.io>
 
 ENV DEBIAN_FRONTEND=noninteractive
