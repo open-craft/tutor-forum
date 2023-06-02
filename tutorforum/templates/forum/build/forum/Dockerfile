@@ -1,6 +1,4 @@
-FROM docker.io/ruby:2.5.7-slim-buster
-MAINTAINER Overhang.IO <contact@overhang.io>
-
+FROM docker.io/ruby:3.0.4-slim-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \

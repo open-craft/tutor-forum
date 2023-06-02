@@ -15,8 +15,8 @@ config = {
         "MONGODB_DATABASE": "cs_comments_service",
         "PORT": "4567",
         "API_KEY": "forumapikey",
-        "REPOSITORY": "https://github.com/openedx/cs_comments_service.git",
-        "REPOSITORY_VERSION": "{{ OPENEDX_COMMON_VERSION }}",
+        "REPOSITORY": "https://github.com/open-craft/cs_comments_service.git",
+        "REPOSITORY_VERSION": "opencraft-release/nutmeg.2",
     },
 }
 
@@ -137,7 +137,9 @@ for path in glob(
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"FORUM_{key}", value) for key, value in config.get("defaults", {}).items()]
+    + [("GROVE_ENABLE_SHARED_ELASTICSEARCH", False)]
 )
+
 tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
