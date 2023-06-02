@@ -39,4 +39,5 @@ spec:
               value: "{{MONGODB_AUTH_SOURCE}}"
             - name: MONGOID_AUTH_MECH
               value: "{{ MONGODB_AUTH_MECHANISM|auth_mech_as_ruby }}"
-
+            - name: ELASTICSEARCH_INDEX_PREFIX
+              value: "{{ ELASTICSEARCH_INDEX_PREFIX|default("") }}"
