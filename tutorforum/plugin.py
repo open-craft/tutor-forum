@@ -139,7 +139,9 @@ for path in glob(
 # Add configuration entries
 tutor_hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"FORUM_{key}", value) for key, value in config.get("defaults", {}).items()]
+    + [("GROVE_ENABLE_SHARED_ELASTICSEARCH", False)]
 )
+
 tutor_hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config.get("overrides", {}).items())
 )
