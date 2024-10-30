@@ -18,26 +18,6 @@ config = {
 # Auto-mount forum repository
 tutor_hooks.Filters.MOUNTED_DIRECTORIES.add_item(("openedx", "forum"))
 
-tutor_hooks.Filters.ENV_PATCHES.add_items(
-    [
-        # Patch edx-platform
-        # https://github.com/openedx/edx-platform/pull/35671
-        # TODO after this PR has been merged, remove this patch
-        (
-            "openedx-dockerfile-post-git-checkout",
-            """
-RUN git remote add edly https://github.com/edly-io/edx-platform \
-    && git fetch edly edly/forumv2 \
-    && git merge edly/edly/forumv2""",
-        ),
-        # Enable forum feature
-        (
-            "openedx-common-settings",
-            """FEATURES["ENABLE_DISCUSSION_SERVICE"] = True""",
-        ),
-    ]
-)
-
 # Enable forum v2
 tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item(
     (
