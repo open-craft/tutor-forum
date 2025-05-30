@@ -77,7 +77,7 @@ else:
 ./manage.py lms initialize_forum_indices
 
 # Create Mongodb indexes
-./manage.py lms forum_create_mongodb_indexes
+# ./manage.py lms forum_create_mongodb_indexes
 """,
     )
 )
